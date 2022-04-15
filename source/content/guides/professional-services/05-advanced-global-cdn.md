@@ -123,19 +123,6 @@ This feature is currently in Early Access; for more information, reach out to yo
 
 [See a comparison of the features](https://pantheon.io/product/advanced-global-cdn#pricing-matrix-wrapper) offered by our CDN services.
 
-<<<<<<< HEAD
-### Rate Limiting
-
-Rate Limiting with Advanced Global CDN lets you place limits on request volume at the network perimeter. Organizations of all sizes can adopt this edge configuration to block malicious traffic. With Rate Limiting, guard critical assets including login, form, and promotional pages, with an added layer of security.
-
-The benefits of this feature include:
-
-- Volumetric Attack Mitigation - Reduce the effectiveness of malicious traffic, including brute-force login and denial-of-service attacks.
-
-- Granular Control - Rate Limiting supports adjustable configurations that can be adjusted on a per policy basis, including requests per second, and detection window.
-
-- Custom Responses - Select from actions that allow you to block requests or log them, and configure custom responses for each policy.
-=======
 ### Rate Limiting (Early Access)
 
 Rate Limiting, a feature of Advanced Global CDN, lets you place limits on request volume at the network perimeter. Organizations of all sizes can adopt this edge configuration to block malicious traffic. Rate Limiting can be configured to guard critical assets including login, form, and promotional pages by adding another layer of security to your site.
@@ -153,7 +140,6 @@ The benefits of Rate Limiting include:
 This feature is currently in Early Access; for more information, reach out to your account manager.
 
 </Alert>
->>>>>>> 6846106527abaddc739d09699ae9e7e274f6c1b1
 
 ## Frequently Asked Questions
 
