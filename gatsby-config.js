@@ -29,15 +29,17 @@ module.exports = {
     `gatsby-transformer-yaml`,
     // Supports SCSS stylesheets. Prime to be removed with a CSS refactor
     `gatsby-plugin-sass`, //https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/
-    { // Handles inserting the GTM js blob into the site
+    {
+      // Handles inserting the GTM js blob into the site
       resolve: `gatsby-plugin-google-tagmanager`,
       options: {
         id: process.env.GTM_ID,
         includeInDevelopment: false,
-        defaultDataLayer: { },
-      }
+        defaultDataLayer: {},
+      },
     },
-    { // Handles inserting the Segment js blob into the site
+    {
+      // Handles inserting the Segment js blob into the site
       resolve: "gatsby-plugin-segment-js",
       options: {
         prodKey: process.env.SEGMENT_KEY,
@@ -60,22 +62,24 @@ module.exports = {
         name: `data`,
       },
     },
-    { // Converts Markdown into HTML
+    {
+      // Converts Markdown into HTML
       resolve: `gatsby-transformer-remark`, // https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/
       options: {
-        plugins: [ // Takes additional plugins
+        plugins: [
+          // Takes additional plugins
           {
             resolve: `gatsby-remark-copy-linked-files`,
             options: {
               // Moves downloadable scripts to a subdirectory in the build artifact
-              destignationDir: f => `scripts/${f.name}`, // destignationDir is defined in gatsby-node.js
+              destignationDir: (f) => `scripts/${f.name}`, // destignationDir is defined in gatsby-node.js
             },
           },
         ],
       },
-        // Honestly not sure why this is here.
-        path: `${__dirname}/source/scripts`,
-        name: `scripts`,
+      // Honestly not sure why this is here.
+      path: `${__dirname}/source/scripts`,
+      name: `scripts`,
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -99,13 +103,16 @@ module.exports = {
       },
     },
     // When running Gatsby develop, creates reporting pages
-    ...(process.env.NODE_ENV === 'development' ? [
-    {
-      resolve: `gatsby-plugin-page-creator`,
-      options: {
-        path: `${__dirname}/src/reports`,
-      },
-    }, ] : []),
+    ...(process.env.NODE_ENV === "development"
+      ? [
+          {
+            resolve: `gatsby-plugin-page-creator`,
+            options: {
+              path: `${__dirname}/src/reports`,
+            },
+          },
+        ]
+      : []),
     // ...? Just read the page, I dunno.
     {
       resolve: `gatsby-plugin-manifest`, // https://www.gatsbyjs.com/plugins/gatsby-plugin-manifest/
@@ -121,29 +128,34 @@ module.exports = {
     },
     // Consumes JSON files into GraphQL
     `gatsby-transformer-json`, // https://www.gatsbyjs.com/plugins/gatsby-transformer-json/
-    { // Allows for React components within the Markdown files.
+    {
+      // Allows for React components within the Markdown files.
       resolve: `gatsby-plugin-mdx`, // https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/
       options: {
         extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
-          { // Allows for more complex tables
+          {
+            // Allows for more complex tables
             resolve: "gatsby-remark-grid-tables", // https://www.gatsbyjs.com/plugins/gatsby-remark-grid-tables/
           },
-          { // Used to create code snippets from files on GitHub
+          {
+            // Used to create code snippets from files on GitHub
             resolve: "gatsby-remark-github", // https://www.gatsbyjs.com/plugins/gatsby-remark-github/
             options: {
-              marker: 'GITHUB-EMBED',
+              marker: "GITHUB-EMBED",
               insertEllipsisComments: true,
-              ellipsisPhrase: '...',
+              ellipsisPhrase: "...",
               useCache: true,
-              cacheKey: 'gatsby-remark-github-v1',
+              cacheKey: "gatsby-remark-github-v1",
               token: process.env.GITHUB_API,
-            }
+            },
           },
-          { // Required so the custom Youtube component can create iframes that work with Gatsby
+          {
+            // Required so the custom Youtube component can create iframes that work with Gatsby
             resolve: "gatsby-remark-responsive-iframe", // https://www.gatsbyjs.com/plugins/gatsby-remark-responsive-iframe/
           },
-          { // Self-explanatory
+          {
+            // Self-explanatory
             resolve: "gatsby-remark-images", // https://www.gatsbyjs.com/plugins/gatsby-remark-images/
             options: {
               maxWidth: 1035,
@@ -153,7 +165,8 @@ module.exports = {
               linkImagesToOriginal: false,
             },
           },
-          { // Adds titles to code blocks... obvi
+          {
+            // Adds titles to code blocks... obvi
             resolve: `gatsby-remark-code-titles`, // https://www.gatsbyjs.com/plugins/gatsby-remark-code-titles/
             options: {
               className: `gatsby-remark-code-title`, // Defines the CSS class it uses, for custom styling
@@ -197,9 +210,33 @@ module.exports = {
     },
     `gatsby-plugin-react-helmet`,
     {
-      resolve: 'gatsby-plugin-sitemap',
+      resolve: "gatsby-plugin-sitemap",
     },
     `gatsby-plugin-fontawesome-css`,
+    // POC - source docs from @pantheon-systems/decuopled-kit-js monorepo
+    // files can be queried with the following:
+    /**
+      {
+        allFile(filter: { sourceInstanceName: { eq: "decoupled-kit-js" } }) {
+          edges {
+            node {
+              extension
+              dir
+              modifiedTime
+            }
+          }
+        }
+      }
+     */
+    {
+      resolve: "gatsby-source-git",
+      options: {
+        name: "decoupled-kit-js",
+        remote: "https://github.com/pantheon-systems/decoupled-kit-js.git",
+        branch: "canary",
+        local: "/source/content",
+        patterns: "web/docs/**",
+      },
+    },
   ],
 }
-
