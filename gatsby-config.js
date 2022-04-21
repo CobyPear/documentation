@@ -26,6 +26,31 @@ module.exports = {
     "Mdx.frontmatter.contributors": "ContributorYaml",
   },
   plugins: [
+    // POC - source docs from @pantheon-systems/decuopled-kit-js monorepo
+    // files can be queried with the following:
+    /**
+      {
+        allFile(filter: { sourceInstanceName: { eq: "decoupled-kit-js" } }) {
+          edges {
+            node {
+              extension
+              dir
+              modifiedTime
+            }
+          }
+        }
+      }
+     */
+    {
+      resolve: "gatsby-source-git",
+      options: {
+        name: "decoupled-kit-js",
+        remote: "https://github.com/CobyPear/decoupled-kit-js.git",
+        branch: "DB-1857",
+        patterns: "/web/docs/**/*.md",
+      },
+    },
+    "source-decoupled-docs",
     `gatsby-transformer-yaml`,
     // Supports SCSS stylesheets. Prime to be removed with a CSS refactor
     `gatsby-plugin-sass`, //https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/
@@ -100,6 +125,13 @@ module.exports = {
       options: {
         path: `${__dirname}/source/content`,
         name: `content`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/source/decoupled-kit`,
+        name: `decoupled-kit`,
       },
     },
     // When running Gatsby develop, creates reporting pages
@@ -213,30 +245,5 @@ module.exports = {
       resolve: "gatsby-plugin-sitemap",
     },
     `gatsby-plugin-fontawesome-css`,
-    // POC - source docs from @pantheon-systems/decuopled-kit-js monorepo
-    // files can be queried with the following:
-    /**
-      {
-        allFile(filter: { sourceInstanceName: { eq: "decoupled-kit-js" } }) {
-          edges {
-            node {
-              extension
-              dir
-              modifiedTime
-            }
-          }
-        }
-      }
-     */
-    {
-      resolve: "gatsby-source-git",
-      options: {
-        name: "decoupled-kit-js",
-        remote: "https://github.com/pantheon-systems/decoupled-kit-js.git",
-        branch: "canary",
-        local: "/source/content",
-        patterns: "web/docs/**",
-      },
-    },
   ],
 }
