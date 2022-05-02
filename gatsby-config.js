@@ -8,6 +8,21 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+const queires = [
+  {
+    typeName: "TerminusGitHub",
+    fieldName: "terminusGH"
+  },
+  {
+    typeName: "DrushGitHub",
+    fieldName: "drushGH"
+  },
+  {
+    typeName: "TerminusBuildToolsGitHub",
+    fieldName: "terminusBTGH"
+  },
+]
+
 // Gatsby Configuration, Options, and Plugins
 module.exports = {
   // Puts build artifacts in a subdirectory, and updates all local links
@@ -232,11 +247,83 @@ module.exports = {
       resolve: "gatsby-source-git",
       options: {
         name: "decoupled-kit-js",
-        remote: "https://github.com/pantheon-systems/decoupled-kit-js.git",
-        branch: "canary",
-        local: "/source/content",
-        patterns: "web/docs/**",
+        remote: "https://github.com/CobyPear/decoupled-kit-js.git",
+        branch: "DB-1857",
+        patterns: "/web/docs/**/*.md",
       },
     },
+    ...queires.map(({ typeName, fieldName }) => ({
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: typeName,
+        fieldName: fieldName,
+        url: "https://api.github.com/graphql",
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_API}`,
+          "Content-Type": "application/json",
+        },
+      },
+    })),
   ],
 }
+
+// queries to be used on the data from gatsby-source-graphql
+/**
+      query GetTerminusReleases {
+    repository(name: "terminus", owner: "pantheon-systems") {
+      id
+      releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+        edges {
+          node {
+            id
+            name
+            publishedAt
+            url
+            tagName
+          }
+        }
+      }
+    }
+  }
+    query GetDrushReleases {
+  repository(name: "drush", owner: "drush-ops") {
+    releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+      edges {
+        node {
+          tagName
+          url
+          publishedAt
+          name
+        }
+      }
+    }
+  }
+}
+  {
+    query GetBuildToolsReleases {
+  repository(name: "terminus-build-tools-plugin", owner: "pantheon-systems") {
+    releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+      edges {
+        node {
+          tagName
+          url
+          publishedAt
+          name
+        }
+      }
+    }
+    issues(first: 100) {
+      nodes {
+        title
+        url
+      }
+    }
+    pullRequests(first: 100) {
+      nodes {
+        title
+        url
+      }
+    }
+  }
+}
+ */
