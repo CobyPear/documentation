@@ -11,15 +11,15 @@ require("dotenv").config({
 const queires = [
   {
     typeName: "TerminusGitHub",
-    fieldName: "terminusGH"
+    fieldName: "terminusGH",
   },
   {
     typeName: "DrushGitHub",
-    fieldName: "drushGH"
+    fieldName: "drushGH",
   },
   {
     typeName: "TerminusBuildToolsGitHub",
-    fieldName: "terminusBTGH"
+    fieldName: "terminusBTGH",
   },
 ]
 
@@ -267,25 +267,28 @@ module.exports = {
   ],
 }
 
-// queries to be used on the data from gatsby-source-graphql
+// example queries to be used on the data from gatsby-source-graphql
 /**
-      query GetTerminusReleases {
-    repository(name: "terminus", owner: "pantheon-systems") {
-      id
-      releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
-        edges {
-          node {
+      {
+        terminusGH {
+          repository(name: "terminus", owner: "pantheon-systems") {
             id
-            name
-            publishedAt
-            url
-            tagName
+            releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+              edges {
+                node {
+                  id
+                  name
+                  publishedAt
+                  url
+                  tagName
+                }
+              }
+            }
           }
         }
       }
-    }
-  }
-    query GetDrushReleases {
+      
+  drushGH{
   repository(name: "drush", owner: "drush-ops") {
     releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
       edges {
@@ -299,31 +302,31 @@ module.exports = {
     }
   }
 }
-  {
-    query GetBuildToolsReleases {
-  repository(name: "terminus-build-tools-plugin", owner: "pantheon-systems") {
-    releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
-      edges {
-        node {
-          tagName
+{
+  terminusBTGH {
+    repository(name: "terminus-build-tools-plugin", owner: "pantheon-systems") {
+      releases(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+        edges {
+          node {
+            tagName
+            url
+            publishedAt
+            name
+          }
+        }
+      }
+      issues(first: 100) {
+        nodes {
+          title
           url
-          publishedAt
-          name
+        }
+      }
+      pullRequests(first: 100) {
+        nodes {
+          title
+          url
         }
       }
     }
-    issues(first: 100) {
-      nodes {
-        title
-        url
-      }
-    }
-    pullRequests(first: 100) {
-      nodes {
-        title
-        url
-      }
-    }
   }
-}
  */
