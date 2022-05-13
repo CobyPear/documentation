@@ -11,7 +11,8 @@ require("dotenv").config({
 // Gatsby Configuration, Options, and Plugins
 module.exports = {
   // Puts build artifacts in a subdirectory, and updates all local links
-  pathPrefix: `/docs`,
+  // remove path prefix for decoupled deploy
+  // pathPrefix: `/docs`,
   // Reusable global information
   siteMetadata: {
     title: `Pantheon Docs`,
