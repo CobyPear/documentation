@@ -29,22 +29,22 @@ module.exports = {
     `gatsby-transformer-yaml`,
     // Supports SCSS stylesheets. Prime to be removed with a CSS refactor
     `gatsby-plugin-sass`, //https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/
-    { // Handles inserting the GTM js blob into the site
-      resolve: `gatsby-plugin-google-tagmanager`,
-      options: {
-        id: process.env.GTM_ID,
-        includeInDevelopment: false,
-        defaultDataLayer: { },
-      }
-    },
-    { // Handles inserting the Segment js blob into the site
-      resolve: "gatsby-plugin-segment-js",
-      options: {
-        prodKey: process.env.SEGMENT_KEY,
-        devKey: process.env.SEGMENT_KEY,
-        trackPage: false,
-      },
-    },
+    // { // Handles inserting the GTM js blob into the site
+    //   resolve: `gatsby-plugin-google-tagmanager`,
+    //   options: {
+    //     id: process.env.GTM_ID,
+    //     includeInDevelopment: false,
+    //     defaultDataLayer: { },
+    //   }
+    // },
+    // { // Handles inserting the Segment js blob into the site
+    //   resolve: "gatsby-plugin-segment-js",
+    //   options: {
+    //     prodKey: process.env.SEGMENT_KEY,
+    //     devKey: process.env.SEGMENT_KEY,
+    //     trackPage: false,
+    //   },
+    // },
     // Each instance of `gatsby-source-filesystem` tells Gatsby to look in a different directory for source files.
     {
       resolve: `gatsby-source-filesystem`,

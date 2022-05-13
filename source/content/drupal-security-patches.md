@@ -83,7 +83,7 @@ For the steps below, replace `$PATCHNUM` with the patch number from Drupal and `
 
 1. Add an `extras` section inside your `composer.json` file:
 
-    ```bassh
+    ```bash
     "extra": {
       "patches-file": "local/path/to/your/composer.patches.json"
     }
